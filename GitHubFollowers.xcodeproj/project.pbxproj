@@ -26,6 +26,7 @@
 		1460BA09267F7A3A00E03EA0 /* GFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1460BA08267F7A3A00E03EA0 /* GFError.swift */; };
 		1460BA0C267F824300E03EA0 /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1460BA0B267F824300E03EA0 /* FollowerCell.swift */; };
 		1460BA0E267F82C600E03EA0 /* GFAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1460BA0D267F82C600E03EA0 /* GFAvatarImageView.swift */; };
+		1460BA11268038FC00E03EA0 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1460BA10268038FC00E03EA0 /* UIHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		1460BA08267F7A3A00E03EA0 /* GFError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFError.swift; sourceTree = "<group>"; };
 		1460BA0B267F824300E03EA0 /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		1460BA0D267F82C600E03EA0 /* GFAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAvatarImageView.swift; sourceTree = "<group>"; };
+		1460BA10268038FC00E03EA0 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				1460BA08267F7A3A00E03EA0 /* GFError.swift */,
+				1460BA10268038FC00E03EA0 /* UIHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				1460B9EA267ED64900E03EA0 /* SearchVC.swift in Sources */,
 				1460B9F2267F14A500E03EA0 /* FollowerListVC.swift in Sources */,
 				1460B9FA267F237600E03EA0 /* UIViewController+Ext.swift in Sources */,
+				1460BA11268038FC00E03EA0 /* UIHelper.swift in Sources */,
 				1460BA0E267F82C600E03EA0 /* GFAvatarImageView.swift in Sources */,
 				1460B9EE267EE09F00E03EA0 /* GFButton.swift in Sources */,
 				1460B9F8267F1DBE00E03EA0 /* GFAlertVC.swift in Sources */,
