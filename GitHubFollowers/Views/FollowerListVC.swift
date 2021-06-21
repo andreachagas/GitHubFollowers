@@ -13,7 +13,7 @@ class FollowerListVC: UIViewController {
         case main
     }
     
-    var followers: [Follower] = [Follower]()
+    var followers: [Follower] = []
     
     var username: String = ""
     var collectionView: UICollectionView!
