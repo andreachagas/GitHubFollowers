@@ -9,8 +9,8 @@ import UIKit
 
 class GFAvatarImageView: UIImageView {
     
-    let placeholderImage = UIImage(named: "avatar-placeholder")! // not a good idea to force unwrap this...
-    let cache = NetworkManager.shared.cache
+    let placeholderImage: UIImage = UIImage(named: "avatar-placeholder")!
+    let cache: NSCache = NetworkManager.shared.cache
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,9 +30,10 @@ class GFAvatarImageView: UIImageView {
     
     func downloadImage(from urlString: String) {
         let cacheKey = NSString(string: urlString)
+        
         if let image = cache.object(forKey: cacheKey) {
             self.image = image
-            return
+            return // if we have the cached image, don't run network call
         }
         
         guard let url = URL(string: urlString) else { return }
@@ -49,11 +50,12 @@ class GFAvatarImageView: UIImageView {
             guard let data = data else { return }
             
             guard let image = UIImage(data: data) else { return }
+            strongSelf.cache.setObject(image, forKey: cacheKey)
             
             DispatchQueue.main.async {
                 strongSelf.image = image
             }
         }
-        task.resume()
+        task.resume() // run the network call
     }
 }
