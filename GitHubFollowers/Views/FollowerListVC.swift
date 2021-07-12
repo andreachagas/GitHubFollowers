@@ -18,13 +18,15 @@ class FollowerListVC: UIViewController {
     var username: String = ""
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
+    var page: Int = 1
+    var hasMoreFollowers: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureViewController()
         configureCollectionView()
-        getFollowers()
+        getFollowers(username: username, page: page)
         configureDataSource()
     }
 
@@ -42,17 +44,19 @@ class FollowerListVC: UIViewController {
     func configureCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createThreeColumnFlowLayout(in: view)) // fill the entire view up to bounds
         view.addSubview(collectionView)
+        collectionView.delegate = self
         collectionView.backgroundColor = .systemBackground
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
     
-    func getFollowers() {
-        NetworkManager.shared.getFollowers(for: username, page: 1) { [weak self] result in // taking care of memory leaks with weak self
+    func getFollowers(username: String, page: Int) {
+        NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in // taking care of memory leaks with weak self
             guard let strongSelf = self else { return }
             
             switch result {
             case .success(let followers):
-                strongSelf.followers = followers // adding all followers
+                if followers.count < 100 { self?.hasMoreFollowers = false }
+                strongSelf.followers.append(contentsOf: followers) // adding all followers
                 strongSelf.updateData() // avoiding race conditions
             case .failure(let error):
                 strongSelf.presentGFAlertOnMainThread(title: "Bad Stuff Happened", message: error.rawValue, buttonTitle: "Ok")
@@ -74,6 +78,20 @@ class FollowerListVC: UIViewController {
         snapshot.appendItems(followers)
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot, animatingDifferences: true) // to avoid warnings from Xcode, although WWDC said it was fine to call from back thread
+        }
+    }
+}
+
+extension FollowerListVC: UICollectionViewDelegate {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height {
+            guard hasMoreFollowers else { return }
+            page += 1
+            getFollowers(username: username, page: page)
         }
     }
 }
